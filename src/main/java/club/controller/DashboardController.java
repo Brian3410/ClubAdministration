@@ -152,7 +152,11 @@ public class DashboardController extends BaseController {
 
             {
                 // Enable text wrapping for the announcement text
-                announcementText.wrappingWidthProperty().bind(announcementsListView.widthProperty().subtract(52)); // Adjust width as needed
+                if (App.isAdmin()) {
+                    announcementText.wrappingWidthProperty().bind(announcementsListView.widthProperty().subtract(70)); // Adjust width as needed
+                } else {
+                    announcementText.wrappingWidthProperty().bind(announcementsListView.widthProperty().subtract(18));
+                }
 
                 // Always add the announcement text first
                 container.getChildren().add(announcementText);
