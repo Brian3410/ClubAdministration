@@ -153,15 +153,24 @@ public class DashboardController extends BaseController {
             {
                 // Enable text wrapping for the announcement text
                 announcementText.wrappingWidthProperty().bind(announcementsListView.widthProperty().subtract(52)); // Adjust width as needed
-                deleteButton.setOnAction(event -> {
-                    Announcement announcement = getItem();
-                    if (announcement != null) {
-                        App.getClub().getAnnouncements().remove(announcement);
-                        announcements.remove(announcement);
-                        App.getDataManager().saveClubData(App.getClub());
-                    }
-                });
-                container.getChildren().addAll(announcementText, deleteButton);
+
+                // Always add the announcement text first
+                container.getChildren().add(announcementText);
+
+                // Check if the user is an admin before adding the delete button
+                if (App.isAdmin()) {
+                    deleteButton.setOnAction(event -> {
+                        Announcement announcement = getItem();
+                        if (announcement != null) {
+                            App.getClub().getAnnouncements().remove(announcement);
+                            announcements.remove(announcement);
+                            App.getDataManager().saveClubData(App.getClub());
+                        }
+                    });
+                    // Add delete button after the text (at the back) only for admins
+                    container.getChildren().add(deleteButton);
+                }
+
                 container.setSpacing(10); // Add spacing between text and button
             }
 
