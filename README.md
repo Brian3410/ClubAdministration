@@ -1,7 +1,7 @@
-# IntegraDev Club Management System  
+# Club Management System  
 
 ## Overview  
-The **IntegraDev Club Management System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
+The **Club Management System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
 
 ## Features  
 
@@ -33,7 +33,7 @@ The **IntegraDev Club Management System** is a Java-based application designed t
 - **Maven**: For dependency management and project build.  
 
 ## Project Structure  
-``` bash
+``` 
 src/
 ├── main/
 │   ├── java/
