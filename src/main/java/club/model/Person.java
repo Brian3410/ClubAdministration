@@ -53,9 +53,6 @@ public abstract class Person {
      * @param email The new email of the person.
      */
     public void setEmail(String email) {
-        if (!email.contains("@")) {
-            throw new IllegalArgumentException("Invalid email format.");
-        }
         this.email = email;
     }
 
