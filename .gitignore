@@ -24,4 +24,3 @@ hs_err_pid*
 replay_pid*
 /.idea/
 /target/
-/out/artifacts/integradev_jar/saves/club.db
