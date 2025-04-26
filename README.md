@@ -1,4 +1,4 @@
-# README: IntegraDev Club Management System  
+# IntegraDev Club Management System  
 
 ## Overview  
 The **IntegraDev Club Management System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
@@ -6,25 +6,25 @@ The **IntegraDev Club Management System** is a Java-based application designed t
 ## Features  
 
 ### User Management  
-- Admins and members can log in and manage their profiles.  
-- Admins can add, edit, and delete members.  
+- Admins and members can log in and manage their profiles.
+- Admins can edit the status and general information of members.
 
-### Event Management  
+### Event Management
 - Admins can create, edit, and delete events.  
 - Members can view upcoming events.  
 
 ### Announcements  
-- Admins can post announcements visible to all members.  
+- Admins can post and delete announcements visible to all members.  
 
 ### Dashboard  
 - Displays club statistics, including total members and upcoming events.  
-- Provides quick navigation to key features.  
+- Provides quick navigation to key features for admins.
 
 ### Data Persistence  
 - All data (members, admins, events, announcements) is stored in an SQLite database.  
 
-### Secure Login  
-- Passwords are securely stored and validated.  
+### Secure Remember Me  
+- Passwords are securely encrypted and stored in properties source files.
 
 ## Technologies Used  
 - **Java**: Core programming language.  
@@ -38,7 +38,8 @@ src/
 ├── main/
 │   ├── java/
 │   │   ├── club/
-│   │   │   ├── App.java                # Main application class
+│   │   │   ├── MainApp.java          # Main application entry point
+│   │   │   ├── App.java              # Application class
 │   │   │   ├── model/                 # Data models
 │   │   │   │   ├── Admin.java          # Represents an admin user
 │   │   │   │   ├── Announcement.java   # Represents announcements
@@ -47,9 +48,14 @@ src/
 │   │   │   │   ├── Member.java         # Represents a club member
 │   │   │   │   └── Person.java         # Base class for Member and Admin
 │   │   │   ├── controller/            # Controllers for UI
+│   │   │   │   ├── AddEventController.java  # Manages event creation
+│   │   │   │   ├── BaseController.java        # Base controller for shared functionality
 │   │   │   │   ├── DashboardController.java  # Manages the dashboard view
 │   │   │   │   ├── EditEventController.java  # Manages event editing
+│   │   │   │   ├── EditMemberController.java  # Manages member editing
+│   │   │   │   ├── EventListController.java  # Manages event list view
 │   │   │   │   ├── LoginController.java      # Manages login functionality
+│   │   │   │   ├── MemberListController.java  # Manages member list view
 │   │   │   │   ├── ProfileController.java    # Manages user profiles
 │   │   │   │   └── SignUpController.java     # Manages user sign-up
 │   │   │   ├── database/              # Database management
@@ -58,19 +64,23 @@ src/
 │   │   └── module-info.java           # Module configuration
 │   ├── resources/
 │   │   ├── club/
+│   │   │   ├── AddEvent.fxml         # FXML for adding events
 │   │   │   ├── Dashboard.fxml         # FXML for dashboard UI
 │   │   │   ├── EditEvent.fxml         # FXML for editing events
+│   │   │   ├── EditMember.fxml       # FXML for editing member details
+│   │   │   ├── EventList.fxml         # FXML for event list view
 │   │   │   ├── Login.fxml             # FXML for login screen
+│   │   │   ├── MemberList.fxml       # FXML for member list view
 │   │   │   ├── Profile.fxml           # FXML for profile screen
 │   │   │   └── SignUp.fxml            # FXML for sign-up screen
 │   │   └── META-INF/
 │   │       └── MANIFEST.MF            # Manifest file
-├── test/                              # Unit tests (if applicable)
 └── pom.xml                            # Maven configuration                         
 ```
 
 ### Key Classes  
-- **App.java**: Entry point for the application. Manages scene switching and global state.  
+- **MainApp.java**: Entry point for the application. 
+- **App.java**: Initializes the JavaFX application and sets up the primary stage. Manages scene switching and global state.
 - **Club.java**: Represents the club and manages members, admins, events, and announcements.  
 - **DataManager.java**: Handles data persistence and retrieval from the SQLite database.  
 - **DashboardController.java**: Manages the dashboard view, including statistics, event table, and announcements.  
@@ -93,14 +103,12 @@ src/
 
 ### Prerequisites  
 - Java Development Kit (JDK) 21 or higher.  
-- Maven 3.8 or higher.  
-- SQLite database.  
+- Maven 3.8 or higher.
 
-### Steps  
+### Steps
 1. **Clone the Repository**:  
      ```bash  
-     git clone https://github.com/your-repo/integradev-club-management.git  
-     cd integradev-club-management  
+     git clone https://github.com/Brian3410/ClubAdministration.git
      ```  
 
 2. **Build the Project**:  
@@ -111,26 +119,15 @@ src/
 3. **Run the Application**:  
      ```bash  
      mvn javafx:run  
-     ```  
+     ```
+    Alternatively, you can run the MainApp class directly from your IDE.
+    The executable jar file from the 'out/artifacts/integradev_jar' directory can also be run using the command:
+    ```bash  
+    java -jar out/artifacts/integradev_jar/integradev.jar
+    ```
 
 4. **Database Setup**:  
-     - The application automatically initializes the SQLite database and creates necessary tables on the first run.  
-
-## How to Contribute  
-1. Fork the repository.  
-2. Create a new branch for your feature or bug fix:  
-     ```bash  
-     git checkout -b feature/your-feature-name
-     ```  
-3. Commit your changes:  
-     ```bash  
-     git commit -m "Add feature description"  
-     ```  
-4. Push to your branch:  
-     ```bash  
-     git push origin feature/your-feature-name
-     ```  
-5. Create a pull request.  
+     - The application automatically initializes the SQLite database and creates necessary tables on the first run.
 
 ## License  
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
