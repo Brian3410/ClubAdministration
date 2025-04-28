@@ -85,16 +85,16 @@ src/
 - UML Class Diagrams are generated for 'controller', 'database' and 'model' packages. You can find the diagrams in the `docs/UML` directory.
 
 #### Whole UML Class Diagram
-- ![WholeUML.png](docs%2FUML%2FWholeUML.png)
+- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/WholeUML.png)
 
 #### Model UML Class Diagram
-- ![ModelUML.png](docs%2FUML%2FModelUML.png)
+- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ModelUML.png)
 
 #### Controller UML Class Diagram
-- ![ControllerUML.png](docs%2FUML%2FControllerUML.png)
+- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ControllerUML.png)
 
 #### Database UML Class Diagram
-- ![DatabaseUML.png](docs%2FUML%2FDatabaseUML.png)
+- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/DatabaseUML.png)
 
 ### Key Classes  
 - **MainApp.java**: Entry point for the application. 
