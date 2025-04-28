@@ -26,6 +26,36 @@ The **Club Administration System** is a Java-based application designed to manag
 ### Secure Remember Me  
 - Passwords are securely encrypted and stored in properties source files.
 
+## Setup Instructions
+
+### Prerequisites
+- Java Development Kit (JDK) 21 or higher.
+- Maven 3.8 or higher.
+
+### Steps
+1. **Clone the Repository**:
+     ```bash  
+     git clone https://github.com/Brian3410/ClubAdministration.git
+     ```  
+
+2. **Build the Project**:
+     ```bash  
+     mvn clean install  
+     ```  
+
+3. **Run the Application**:
+     ```bash  
+     mvn javafx:run  
+     ```
+   Alternatively, you can run the MainApp class directly from your IDE.
+   The executable jar file from the 'out/artifacts/integradev_jar' directory can also be run using the command:
+    ```bash  
+    java -jar out/artifacts/integradev_jar/integradev.jar
+    ```
+
+4. **Database Setup**:
+    - The application automatically initializes the SQLite database and creates necessary tables on the first run.
+
 ## Technologies Used  
 - **Java**: Core programming language.  
 - **JavaFX**: For building the graphical user interface (GUI).  
@@ -84,17 +114,25 @@ src/
 ### UML Class Diagram
 - UML Class Diagrams are generated for 'controller', 'database' and 'model' packages. You can find the diagrams in the `docs/UML` directory.
 
-#### Whole UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/WholeUML.png)
+#### Whole System UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/WholeUML.png" alt="Whole UML Diagram" width="70%">
+</div>
 
-#### Model UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ModelUML.png)
+#### Model Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ModelUML.png" alt="Model UML Diagram" width="70%">
+</div>
 
-#### Controller UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ControllerUML.png)
+#### Controller Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ControllerUML.png" alt="Controller UML Diagram" width="70%">
+</div>
 
-#### Database UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/DatabaseUML.png)
+#### Database Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/DatabaseUML.png" alt="Database UML Diagram" width="70%">
+</div>
 
 ### Key Classes  
 - **MainApp.java**: Entry point for the application. 
@@ -115,37 +153,7 @@ src/
 - **Abstraction**:  
     - Abstract methods in `Person` enforce implementation in subclasses.  
 - **Composition**:  
-    - `Club` contains lists of `Member`, `Admin`, `Event`, and `Announcement` objects.  
-
-## Setup Instructions  
-
-### Prerequisites  
-- Java Development Kit (JDK) 21 or higher.  
-- Maven 3.8 or higher.
-
-### Steps
-1. **Clone the Repository**:  
-     ```bash  
-     git clone https://github.com/Brian3410/ClubAdministration.git
-     ```  
-
-2. **Build the Project**:  
-     ```bash  
-     mvn clean install  
-     ```  
-
-3. **Run the Application**:  
-     ```bash  
-     mvn javafx:run  
-     ```
-    Alternatively, you can run the MainApp class directly from your IDE.
-    The executable jar file from the 'out/artifacts/integradev_jar' directory can also be run using the command:
-    ```bash  
-    java -jar out/artifacts/integradev_jar/integradev.jar
-    ```
-
-4. **Database Setup**:  
-     - The application automatically initializes the SQLite database and creates necessary tables on the first run.
+    - `Club` contains lists of `Member`, `Admin`, `Event`, and `Announcement` objects.
 
 ## License  
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  
