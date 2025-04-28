@@ -1,7 +1,7 @@
-# Club Management System  
+# Club Adminstration System  
 
 ## Overview  
-The **Club Management System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
+The **Club Adminstration System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
 
 ## Features  
 
