@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"club","l":"club"},{"m":"club","l":"club.controller"},{"m":"club","l":"club.database"},{"m":"club","l":"club.model"}];updateSearchResults();
