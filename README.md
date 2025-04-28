@@ -84,17 +84,25 @@ src/
 ### UML Class Diagram
 - UML Class Diagrams are generated for 'controller', 'database' and 'model' packages. You can find the diagrams in the `docs/UML` directory.
 
-#### Whole UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/WholeUML.png)
+#### Whole System UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/WholeUML.png" alt="Whole UML Diagram" width="70%">
+</div>
 
-#### Model UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ModelUML.png)
+#### Model Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ModelUML.png" alt="Model UML Diagram" width="70%">
+</div>
 
-#### Controller UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ControllerUML.png)
+#### Controller Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/ControllerUML.png" alt="Controller UML Diagram" width="70%">
+</div>
 
-#### Database UML Class Diagram
-- ![alt text](https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/DatabaseUML.png)
+#### Database Layer UML Class Diagram
+<div align="center">
+  <img src="https://github.com/Brian3410/ClubAdministration/blob/main/docs/UML/DatabaseUML.png" alt="Database UML Diagram" width="70%">
+</div>
 
 ### Key Classes  
 - **MainApp.java**: Entry point for the application. 
