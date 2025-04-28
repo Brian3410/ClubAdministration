@@ -74,9 +74,27 @@ src/
 │   │   │   ├── Profile.fxml           # FXML for profile screen
 │   │   │   └── SignUp.fxml            # FXML for sign-up screen
 │   │   └── META-INF/
-│   │       └── MANIFEST.MF            # Manifest file
-└── pom.xml                            # Maven configuration                         
+│   │       └── MANIFEST.MF            # Manifest file                    
 ```
+
+## Documentation
+### JavaDoc
+- JavaDoc is generated for all classes and methods. You can find the documentation in the `docs/JavaDoc` directory.
+
+### UML Class Diagram
+- UML Class Diagrams are generated for 'controller', 'database' and 'model' packages. You can find the diagrams in the `docs/UML` directory.
+
+#### Whole UML Class Diagram
+- ![WholeUML.png](docs%2FUML%2FWholeUML.png)
+
+#### Model UML Class Diagram
+- ![ModelUML.png](docs%2FUML%2FModelUML.png)
+
+#### Controller UML Class Diagram
+- ![ControllerUML.png](docs%2FUML%2FControllerUML.png)
+
+#### Database UML Class Diagram
+- ![DatabaseUML.png](docs%2FUML%2FDatabaseUML.png)
 
 ### Key Classes  
 - **MainApp.java**: Entry point for the application. 
