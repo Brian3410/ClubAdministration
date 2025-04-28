@@ -1,0 +1,5 @@
+module:club
+club
+club.controller
+club.database
+club.model
