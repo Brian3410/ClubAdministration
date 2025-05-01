@@ -16,6 +16,8 @@ import javafx.scene.text.Text;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Controller for managing the dashboard view.
@@ -142,7 +144,11 @@ public class DashboardController extends BaseController {
      * Loads announcements into the announcements list view.
      */
     private void loadAnnouncements() {
-        announcements = FXCollections.observableArrayList(App.getClub().getAnnouncements());
+        // Always set placeholder first - this ensures it's displayed when list is empty
+        announcementsListView.setPlaceholder(new Label("No announcements available"));
+        
+        List<Announcement> clubAnnouncements = new ArrayList<>(App.getClub().getAnnouncements());
+        announcements = FXCollections.observableArrayList(clubAnnouncements);
         announcementsListView.setItems(announcements);
 
         announcementsListView.setCellFactory(listView -> new ListCell<>() {
@@ -163,14 +169,31 @@ public class DashboardController extends BaseController {
 
                 // Check if the user is an admin before adding the delete button
                 if (App.isAdmin()) {
-                    deleteButton.setOnAction(event -> {
-                        Announcement announcement = getItem();
-                        if (announcement != null) {
-                            App.getClub().getAnnouncements().remove(announcement);
-                            announcements.remove(announcement);
+                deleteButton.setOnAction(event -> {
+                    Announcement announcement = getItem();
+                    if (announcement != null) {
+                        // Remove from the model
+                        boolean removed = App.getClub().removeAnnouncement(announcement);
+                        if (removed) {
+                            // Save changes to database
                             App.getDataManager().saveClubData(App.getClub());
+                            
+                            // Important: First check if this was the last announcement
+                            boolean wasLastAnnouncement = App.getClub().getAnnouncements().isEmpty();
+                            
+                            if (wasLastAnnouncement) {
+                                // For the empty list case, setting items to null then back to empty list
+                                // forces the ListView to show the placeholder
+                                announcementsListView.setItems(null);
+                                announcements.clear();
+                                announcementsListView.setItems(announcements);
+                            } else {
+                                // Otherwise just reload announcements
+                                loadAnnouncements();
+                            }
                         }
-                    });
+                    }
+                });
                     // Add delete button after the text (at the back) only for admins
                     container.getChildren().add(deleteButton);
                 }
@@ -215,8 +238,12 @@ public class DashboardController extends BaseController {
 
             // Add the announcement to the club and save it
             App.getClub().addAnnouncement(announcement);
-            announcements.add(announcement);
+            
+            // Save to database first
             App.getDataManager().saveClubData(App.getClub());
+            
+            // Completely reload the announcements list to ensure consistency
+            loadAnnouncements();
 
             // Clear the input field
             announcementInput.clear();

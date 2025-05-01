@@ -1,23 +1,27 @@
 package club.model;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Represents a club with members, admins, events, and announcements.
- * Provides methods to manage and validate club data.
+ * Coordinates the various management systems.
  */
-public class Club {
+public class Club implements EventObserver {
 
     private String clubName;
     private List<Member> members;
     private List<Admin> admins;
-    private List<Event> events;
     private List<Announcement> announcements;
+    
+    // New components using improved OO design
+    private MembershipManager membershipManager;
+    private EventManager eventManager;
 
     /**
      * Constructs a Club object with the specified name.
-     * Initializes empty lists for members, admins, events, and announcements.
+     * Initializes empty lists and managers.
      *
      * @param clubName The name of the club.
      */
@@ -25,8 +29,14 @@ public class Club {
         setClubName(clubName);
         setMembers(new ArrayList<>());
         setAdmins(new ArrayList<>());
-        setEvents(new ArrayList<>());
         setAnnouncements(new ArrayList<>());
+        
+        // Initialize managers
+        this.membershipManager = new MembershipManager();
+        this.eventManager = new EventManager();
+        
+        // Register as observer for events
+        this.eventManager.addObserver(this);
     }
 
     // --- Club Name ---
@@ -76,16 +86,49 @@ public class Club {
     }
 
     /**
-     * Adds a new member to the club.
+     * Updates an existing event in the club using the event manager.
+     *
+     * @param event The updated event
+     * @throws IllegalArgumentException If the event is null or not found
+     */
+    public void updateEvent(Event event) {
+        if (event == null) {
+            throw new IllegalArgumentException("Event cannot be null.");
+        }
+        eventManager.updateEvent(event);
+    }
+
+    /**
+     * Removes an announcement from the club.
+     * 
+     * @param announcement The announcement to remove
+     * @return true if the announcement was found and removed, false otherwise
+     * @throws IllegalArgumentException if the announcement is null
+     */
+    public boolean removeAnnouncement(Announcement announcement) {
+        if (announcement == null) {
+            throw new IllegalArgumentException("Announcement cannot be null.");
+        }
+        return this.announcements.remove(announcement);
+    }
+
+    /**
+     * Registers a new member to the club using the membership manager.
      *
      * @param newMember The member to add.
+     * @return The assigned membership ID
      * @throws IllegalArgumentException If the member is null.
      */
-    public void addMember(Member newMember) {
+    public String registerNewMember(Member newMember) {
         if (newMember == null) {
             throw new IllegalArgumentException("Member cannot be null.");
         }
+        
+        // Add to members list
         this.members.add(newMember);
+        
+        // Register with membership manager
+        return membershipManager.registerNewMember(newMember);
     }
 
     /**
@@ -154,32 +197,45 @@ public class Club {
      * @return The list of events.
      */
     public List<Event> getEvents() {
-        return events;
+        return eventManager.getAllEvents();
     }
 
     /**
-     * Sets the list of events in the club.
-     *
-     * @param events The new list of events.
-     */
-    public void setEvents(List<Event> events) {
-        if (events == null) {
-            throw new IllegalArgumentException("Events list cannot be null.");
-        }
-        this.events = events;
-    }
-
-    /**
-     * Adds a new event to the club.
+     * Adds a new event to the club using the event manager.
      *
      * @param event The event to add.
      * @throws IllegalArgumentException If the event is null.
      */
     public void addEvent(Event event) {
-        if (event == null) {
-            throw new IllegalArgumentException("Event cannot be null.");
-        }
-        this.events.add(event);
+        eventManager.addEvent(event);
+    }
+    
+    /**
+     * Registers a member for an event.
+     * 
+     * @param event The event to register for
+     * @param member The member to register
+     */
+    public void registerForEvent(Event event, Member member) {
+        eventManager.registerMemberForEvent(event, member);
+    }
+    
+    /**
+     * Gets the membership manager.
+     * 
+     * @return The membership manager
+     */
+    public MembershipManager getMembershipManager() {
+        return membershipManager;
+    }
+    
+    /**
+     * Gets the event manager.
+     * 
+     * @return The event manager
+     */
+    public EventManager getEventManager() {
+        return eventManager;
     }
 
     // --- Announcements ---
@@ -216,5 +272,39 @@ public class Club {
             throw new IllegalArgumentException("Announcement cannot be null.");
         }
         this.announcements.add(announcement);
+    }
+    
+    /**
+     * Implementation of the EventObserver interface.
+     * Creates announcements automatically when events are created or cancelled.
+     */
+    @Override
+    public void onEventUpdate(Event event, EventAction action) {
+        String message = "";
+        
+        switch (action) {
+            case CREATED:
+                message = "New event created: " + event.getName() + " on " + 
+                          event.getDate() + " at " + event.getTime();
+                break;
+            case CANCELLED:
+                message = "Event cancelled: " + event.getName() + " that was scheduled for " +
+                          event.getDate() + " at " + event.getTime();
+                break;
+            case UPDATED:
+                message = "Event updated: " + event.getName() + " on " + 
+                          event.getDate() + " at " + event.getTime();
+                break;
+        }
+        
+        if (!message.isEmpty()) {
+            // Auto-create announcement for event changes
+            Announcement announcement = new Announcement(
+                announcements.size() + 1,
+                message,
+                LocalDateTime.now()
+            );
+            addAnnouncement(announcement);
+        }
     }
 }

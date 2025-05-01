@@ -251,12 +251,20 @@ public class DataManager {
      */
     private void deleteObsoleteRecords(Connection conn, String deleteQuery, List<?> ids) throws SQLException {
         if (ids.isEmpty()) {
-            return; // No records to retain, skip deletion
+            // Special handling for empty lists - delete all records of this type
+            String tableName = extractTableName(deleteQuery);
+            if (tableName != null) {
+                String deleteAllQuery = "DELETE FROM " + tableName;
+                try (PreparedStatement deleteAllStmt = conn.prepareStatement(deleteAllQuery)) {
+                    deleteAllStmt.executeUpdate();
+                }
+            }
+            return;
         }
-
+    
         String placeholders = String.join(",", ids.stream().map(id -> "?").toList());
         deleteQuery = deleteQuery.replace("(?)", "(" + placeholders + ")");
-
+    
         try (PreparedStatement deleteStmt = conn.prepareStatement(deleteQuery)) {
             for (int i = 0; i < ids.size(); i++) {
                 deleteStmt.setObject(i + 1, ids.get(i));
@@ -265,6 +273,27 @@ public class DataManager {
         }
     }
 
+    /**
+     * Extracts the table name from a delete query.
+     * 
+     * @param deleteQuery The delete query to parse.
+     * @return The table name or null if not found.
+     */
+    private String extractTableName(String deleteQuery) {
+        // Simple parser to extract table name from "DELETE FROM table WHERE..."
+        if (deleteQuery == null || !deleteQuery.toUpperCase().contains("FROM")) {
+            return null;
+        }
+        
+        String[] parts = deleteQuery.split("\\s+");
+        for (int i = 0; i < parts.length - 1; i++) {
+            if ("FROM".equalsIgnoreCase(parts[i])) {
+                return parts[i+1];
+            }
+        }
+        return null;
+    }
+    
     /**
      * Loads all club data (members, admins, events, announcements) from the database.
      *
@@ -364,9 +393,8 @@ public class DataManager {
         String selectEvents = "SELECT id, name, date, time, location, description FROM events";
         try (PreparedStatement stmt = conn.prepareStatement(selectEvents);
             ResultSet rs = stmt.executeQuery()) {
-            List<Event> events = new ArrayList<>();
             while (rs.next()) {
-                events.add(new Event(
+                club.addEvent(new Event(
                         rs.getInt("id"), // Load the event ID
                         rs.getString("name"),
                         LocalDate.parse(rs.getString("date")),
@@ -375,7 +403,6 @@ public class DataManager {
                         rs.getString("description")
                 ));
             }
-            club.setEvents(events);
         }
     }
 

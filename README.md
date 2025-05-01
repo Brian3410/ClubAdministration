@@ -1,7 +1,7 @@
 # Club Administration System  
 
 ## Overview  
-The **Club Administration System** is a Java-based application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
+The **Club Administration System** is a Java-based MVC (Model-View-Controller) application designed to manage club operations, including members, admins, events, and announcements. It provides a user-friendly interface built with JavaFX and ensures data persistence using SQLite. The system adheres to Object-Oriented Programming (OOP) principles, ensuring modularity, scalability, and maintainability 
 
 ## Features  
 
@@ -10,7 +10,7 @@ The **Club Administration System** is a Java-based application designed to manag
 - Admins can edit the status and general information of members.
 
 ### Event Management
-- Admins can create, edit, and delete events.  
+- Admins can create and edit events.  
 - Members can view upcoming events.  
 
 ### Announcements  
@@ -75,7 +75,13 @@ src/
 │   │   │   │   ├── Announcement.java   # Represents announcements
 │   │   │   │   ├── Club.java           # Represents the club and its operations
 │   │   │   │   ├── Event.java          # Represents events in the club
+│   │   │   │   ├── EventAction.java    # Enum for event actions
+│   │   │   │   ├── EventManager.java     # Manages event-related operations
+│   │   │   │   ├── EventObserver.java    # Observer for event changes
 │   │   │   │   ├── Member.java         # Represents a club member
+│   │   │   │   ├── MembershipManager.java  # Manages member-related operations
+│   │   │   │   ├── MembershipRecord.java  # Represents membership records
+│   │   │   │   ├── MembershipStatus.java  # Enum for membership status
 │   │   │   │   └── Person.java         # Base class for Member and Admin
 │   │   │   ├── controller/            # Controllers for UI
 │   │   │   │   ├── AddEventController.java  # Manages event creation
@@ -144,16 +150,30 @@ src/
 
 ### OOP Principles in Use  
 - **Encapsulation**:  
-    - All fields in model classes (e.g., `Event`, `Member`) are private with public getters and setters.  
-    - Validation logic is implemented in setters.  
+    - All fields in model classes (e.g., `Event`, `Member`) are private with public getters and setters.  For example, the `Announcement`, private fields (`id`, `message`, `dateTime`) are hidden from external access.
+    - Access to these fields is controlled through public getter and setter methods.
+    - Validation logic is implemented in setters. For example, the 'setMessage' method in the `Announcement` class checks if the message is not empty before setting it.
 - **Inheritance**:  
     - `Person` is a base class for `Member` and `Admin`, sharing common attributes like name and email.  
+    - Specialized fields and behaviors are added in the child classes
 - **Polymorphism**:  
     - The `displayInfo` method in `Person` is overridden in `Member` and `Admin`.  
+    - The `EventObserver` interface allows different classes to implement the `onEventUpdate` method, enabling dynamic behavior when events occur.
 - **Abstraction**:  
-    - Abstract methods in `Person` enforce implementation in subclasses.  
+    - Abstract methods in `Person` enforce implementation in subclasses (a blueprint for its subclasses).
+    - The `EventObserver` interface defines a contract without implementation details for event handling, allowing different classes to implement their own versions of the `onEventUpdate` method.
 - **Composition**:  
-    - `Club` contains lists of `Member`, `Admin`, `Event`, and `Announcement` objects.
+    - `Club` contains `Member`, `Admin`, `Event`, and `Announcement` objects, representing a "has-a" relationship.
+
+### Design Patterns Used
+Several design patterns are implemented:
+- **Observer Pattern**: Used for event notifications through `EventObserver` interface, `EventManager` class, and `EventAction` enum
+- **Separation of Concerns**: Responsibilities are divided among specialized classes (`MembershipManager`, `EventManager`)
+
+### MVC Architecture
+- **Model**: Represents the data and business logic (e.g., `Member`, `Admin`, `Event`, `Announcement` classes).
+- **View**: The user interface components (e.g., FXML files).
+- **Controller**: Handles user input and updates the model and view (e.g., `LoginController`, `DashboardController`).
 
 ## License  
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.  

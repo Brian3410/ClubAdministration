@@ -144,11 +144,19 @@ public class EditEventController extends BaseController{
      * @param description The updated description of the event.
      */
     private void updateEventDetails(String name, LocalDate date, LocalTime time, String location, String description) {
+        // Update the event object
         selectedEvent.setName(name);
         selectedEvent.setDate(date);
         selectedEvent.setTime(time);
         selectedEvent.setLocation(location);
         selectedEvent.setDescription(description);
+        
+        // Use the Club's update method to properly update the event in the system
+        try {
+            App.getClub().updateEvent(selectedEvent);
+        } catch (IllegalArgumentException e) {
+            showAlert("Error", "Failed to update event: " + e.getMessage());
+        }
     }
 
     /**
