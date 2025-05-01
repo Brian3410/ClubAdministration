@@ -45,13 +45,11 @@ public class SignUpController extends BaseController{
             return;
         }
 
-        // Generate a unique membership ID
-        String membershipId = App.getDataManager().generateNextMembershipId();
-
         // Create and add the new member
         Member newMember = new Member(name, email, phone, true, password);
-        newMember.setMembershipId(membershipId);
-        App.getClub().addMember(newMember);
+
+        // Let the membership manager generate and assign the ID
+        String membershipId = App.getClub().registerNewMember(newMember);
 
         // Save the updated club data
         App.getDataManager().saveClubData(App.getClub());
